@@ -1,8 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const { execSync } = require('child_process');
-const { androidCapabilities } = require('./src/config/capabilities');
-const { DEFAULT_TIMEOUT }     = require('./src/config/timeouts');
+const { DEFAULT_TIMEOUT } = require('./src/config/timeouts');
 
 // Garantiza que ANDROID_HOME esté disponible para el proceso de Appium
 if (!process.env.ANDROID_HOME && !process.env.ANDROID_SDK_ROOT) {
@@ -14,14 +13,24 @@ if (!process.env.ANDROID_HOME && !process.env.ANDROID_SDK_ROOT) {
 
 const ADB = `"${process.env.ANDROID_HOME}\\platform-tools\\adb.exe"`;
 
+// Matriz de emuladores: Pixel_7 (flagship Android 17) + 2 segmentos del mercado argentino
+const EMULATORS = [
+  { deviceName: 'emulator-5554', platformVersion: '17', avd: 'Pixel_7' },
+  { deviceName: 'emulator-5556', platformVersion: '14', avd: 'AVD_ARG_Mainstream' },
+  { deviceName: 'emulator-5558', platformVersion: '13', avd: 'AVD_ARG_MidRange' },
+];
+
 function adb(cmd) {
   try {
     return execSync(`${ADB} ${cmd}`, { encoding: 'utf8', timeout: 15000 }).trim();
-  } catch (e) {
-    // silencioso — el dispositivo puede no estar listo
+  } catch {
     return '';
   }
 }
+
+const appPath     = path.resolve(process.env.APP_PATH     || './app-debug.apk');
+const appPackage  = process.env.APP_PACKAGE               || 'com.femmto.app';
+const appActivity = process.env.APP_ACTIVITY              || 'com.femmto.app.MainActivity';
 
 exports.config = {
   runner: 'local',
@@ -37,8 +46,18 @@ exports.config = {
     auth:       require('./tests/suites/auth'),
   },
 
-  maxInstances: 1,
-  capabilities: [androidCapabilities],
+  maxInstances: 3,
+  capabilities: EMULATORS.map(e => ({
+    platformName:              'Android',
+    'appium:app':              appPath,
+    'appium:appPackage':       appPackage,
+    'appium:appActivity':      appActivity,
+    'appium:automationName':   'UiAutomator2',
+    'appium:deviceName':       e.deviceName,
+    'appium:platformVersion':  e.platformVersion,
+    'appium:noReset':          false,
+    'appium:newCommandTimeout': 300,
+  })),
 
   logLevel: 'warn',
   bail: 0,
@@ -63,28 +82,32 @@ exports.config = {
   // --- Hooks globales ---
 
   /**
-   * Deshabilita WiFi ANTES de que Appium lance la app.
-   * Evita que la versión 3.1.0 muestre el force update check al inicio.
-   * WiFi se rehabilita en el hook `before` una vez que la app ya cargó.
+   * Deshabilita WiFi en TODOS los emuladores ANTES de que Appium lance la app.
+   * Evita force update checks en versiones antiguas.
    */
   onPrepare() {
-    console.log('\n[Setup] Deshabilitando WiFi para bypass de force update check...');
-    adb('shell svc wifi disable');
+    console.log('\n[Setup] Deshabilitando WiFi en todos los emuladores...');
+    for (const e of EMULATORS) {
+      adb(`-s ${e.deviceName} shell svc wifi disable`);
+    }
     console.log('[Setup] WiFi deshabilitado.');
   },
 
   /**
-   * Rehabilita WiFi después de que Appium levantó la sesión y la app está activa.
-   * Necesario para que los tests que requieren red (login, etc.) funcionen.
+   * Rehabilita WiFi para el dispositivo de esta sesión una vez que la app cargó.
+   * `driver` está bound al device de la sesión actual — no necesita -s.
    */
   async before() {
-    // Pequeña espera para que la app termine de renderizar su pantalla inicial
     await driver.pause(3000);
-    console.log('\n[Setup] Rehabilitando WiFi post-launch...');
-    adb('shell svc wifi enable');
+    console.log('\n[Setup] Rehabilitando WiFi...');
+    await driver.execute('mobile: shell', { command: 'svc', args: ['wifi', 'enable'] });
+    try {
+      await driver.execute('mobile: shell', {
+        command: 'ime',
+        args: ['disable', 'com.google.android.apps.handwriting.ime/.HandwritingIme'],
+      });
+    } catch {}
     console.log('[Setup] WiFi habilitado.');
-    // Deshabilita el Handwriting IME (stylus overlay) en emuladores Pixel con stylus
-    adb('shell ime disable com.google.android.apps.handwriting.ime/.HandwritingIme');
   },
 
   beforeSuite(suite) {
@@ -110,18 +133,18 @@ exports.config = {
 
   async afterEach() {
     try {
-      const pkg = process.env.APP_PACKAGE || 'com.femmto.app';
-      await driver.execute('mobile: shell', { command: 'am', args: ['force-stop', pkg] });
+      await driver.execute('mobile: shell', { command: 'am', args: ['force-stop', appPackage] });
     } catch {}
   },
 
   /**
-   * Rehabilita WiFi al finalizar todos los tests (limpieza del entorno).
+   * Rehabilita WiFi en todos los emuladores al finalizar la suite.
    */
   onComplete() {
     console.log('\n[Cleanup] Rehabilitando WiFi...');
-    adb('shell svc wifi enable');
+    for (const e of EMULATORS) {
+      adb(`-s ${e.deviceName} shell svc wifi enable`);
+    }
     console.log('[Cleanup] WiFi habilitado.');
   },
 };
-

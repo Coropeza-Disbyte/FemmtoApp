@@ -1,9 +1,14 @@
 node_modules/
 apps/*.apk
 apps/*.aab
+*.apk
+*.aab
 .env
 *.log
 allure-results/
 allure-report/
 screenshots/
 ui_*.xml
+.claude/settings.local.json
+scripts/.apk-registry.json
+scripts/pipeline-*.log

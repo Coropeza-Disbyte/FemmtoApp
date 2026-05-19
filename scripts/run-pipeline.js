@@ -21,9 +21,15 @@ const fs   = require('fs');
 
 const FRAMEWORK_ROOT = path.resolve(__dirname, '..');
 const RN_REPO_PATH   = process.env.RN_REPO_PATH;
-const ADB            = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe';
-const EMULATOR_EXE   = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe';
-const AVD_NAME       = 'Pixel_7';
+const ADB          = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe';
+const EMULATOR_EXE = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe';
+
+// Misma matriz que wdio.conf.js — cada AVD arranca en su puerto fijo
+const EMULATORS = [
+  { avd: 'Pixel_7',             deviceName: 'emulator-5554' },
+  { avd: 'AVD_ARG_Mainstream',  deviceName: 'emulator-5556' },
+  { avd: 'AVD_ARG_MidRange',    deviceName: 'emulator-5558' },
+];
 
 // ─── Logger ───────────────────────────────────────────────────────────────────
 
@@ -73,7 +79,7 @@ function stepGitPull() {
 
   try {
     log(`Repo: ${RN_REPO_PATH}`, 'STEP');
-    execSync('git pull', { cwd: RN_REPO_PATH, stdio: 'inherit' });
+    execSync(`git -C "${RN_REPO_PATH}" pull`, { stdio: 'inherit' });
     log('Git pull completado', 'OK');
   } catch (err) {
     log(`Git pull falló: ${err.message}`, 'WARN');
@@ -106,7 +112,7 @@ function stepClaudeAnalysis(version, prevVersion, prevBuild, isVersionBump) {
     execSync(`claude --print "${prompt.replace(/"/g, "'")}"`, {
       cwd:     FRAMEWORK_ROOT,
       stdio:   'inherit',
-      timeout: 600_000, // 10 min — el análisis puede tomar tiempo
+      timeout: 1_200_000, // 20 min — límite máximo para análisis de repo RN
     });
     log('Análisis completado', 'OK');
   } catch (err) {
@@ -115,44 +121,39 @@ function stepClaudeAnalysis(version, prevVersion, prevBuild, isVersionBump) {
   }
 }
 
+function getActiveDevices() {
+  try {
+    return execSync(`"${ADB}" devices`, { encoding: 'utf8' })
+      .split('\n')
+      .slice(1)
+      .filter(line => line.includes('device') && !line.includes('offline'))
+      .map(line => line.split('\t')[0].trim())
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 function stepEmulator() {
-  logSection('PASO 3 — Emulador Android');
+  logSection('PASO 3 — Verificar emuladores Android');
 
-  let devices = '';
-  try {
-    devices = execSync(`"${ADB}" devices`, { encoding: 'utf8' });
-  } catch {
-    log('No se pudo ejecutar adb', 'WARN');
+  const active = getActiveDevices();
+
+  if (active.length === 0) {
+    log('No hay emuladores activos — tests se omitirán', 'WARN');
+    log('Levantá los emuladores manualmente antes de correr el pipeline', 'WARN');
+    return false;
   }
 
-  const hasDevice = devices
-    .split('\n')
-    .slice(1)
-    .some(line => line.includes('emulator') && line.includes('device'));
+  const found = EMULATORS.filter(e => active.includes(e.deviceName));
+  log(`Emuladores listos: ${found.map(e => e.avd).join(', ')}`, 'OK');
 
-  if (hasDevice) {
-    log('Emulador ya activo — saltando arranque', 'OK');
-    return;
+  const missing = EMULATORS.filter(e => !active.includes(e.deviceName));
+  if (missing.length > 0) {
+    log(`Sin respuesta: ${missing.map(e => e.avd).join(', ')} — tests solo en los activos`, 'WARN');
   }
 
-  log(`Iniciando emulador: ${AVD_NAME}`, 'STEP');
-
-  spawn(EMULATOR_EXE, ['-avd', AVD_NAME], {
-    detached: true,
-    stdio:    'ignore',
-  }).unref();
-
-  log('Esperando boot completo...', 'STEP');
-
-  try {
-    execSync(
-      `"${ADB}" wait-for-device shell "while [ $(getprop sys.boot_completed) != 1 ]; do sleep 2; done; echo Device ready"`,
-      { stdio: 'inherit', timeout: 120_000 }
-    );
-    log('Emulador listo', 'OK');
-  } catch {
-    log('Timeout esperando emulador — continuando', 'WARN');
-  }
+  return true;
 }
 
 function stepTests() {
@@ -177,8 +178,10 @@ function stepReport(params, testsPassed) {
   log(`Versión:    v${prevVersion}(${prevBuild})  →  v${version}(${build})`);
   log(`Tipo:       ${isVersionBump ? 'Version bump' : 'Build fix'}`);
   log(`Análisis:   docs actualizados${isVersionBump ? ' + test plan actualizado' : ' (test plan sin cambios)'}`);
-  log(`Tests:      ${testsPassed ? 'suite completa pasó' : 'hay tests fallidos — revisar output'}`,
-    testsPassed ? 'OK' : 'ERROR');
+  const testsLabel = testsPassed === null
+    ? 'omitidos — no había emuladores activos'
+    : testsPassed ? 'suite completa pasó' : 'hay tests fallidos — revisar output';
+  log(`Tests:      ${testsLabel}`, testsPassed ? 'OK' : 'WARN');
 
   console.log('');
 }
@@ -205,8 +208,8 @@ function main() {
 
   stepGitPull();
   stepClaudeAnalysis(version, prevVersion, prevBuild, isVersionBump);
-  stepEmulator();
-  const testsPassed = stepTests();
+  const emulatorsReady = stepEmulator();
+  const testsPassed = emulatorsReady ? stepTests() : null;
   stepReport({ version, build, prevVersion, prevBuild, isVersionBump }, testsPassed);
 }
 

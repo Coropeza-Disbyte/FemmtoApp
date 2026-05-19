@@ -3,7 +3,7 @@ version: 4.0.0
 screen: home
 risk_level: high
 since: 3.0.1
-last_modified: 2026-05-14
+last_modified: 2026-05-19
 source_files:
   - src/features/Home/containers/Overview/index.js
   - src/features/Home/containers/Overview/sections/ObjectiveTabs/TabsSection.js
@@ -80,8 +80,8 @@ Librería `rn-tourguide`. El tour se muestra una única vez por usuario (persist
 |------|-----|------------|-------------------|
 | Widget activo | 1 | WidgetSection | contenido del widget del objetivo activo |
 | Tabs de objetivos | 2 | TabsSection | cómo cambiar entre objetivos |
-| Hábito diario | 4 | HealthyHabitSection | cómo registrar el hábito |
-| Nueva medición | 5 | botón header | cómo iniciar una medición rápida |
+| Menú del widget | 3 | ícono ⋯ del widget | cómo cambiar el orden de objetivos o editar la selección |
+| Nueva medición | 4 | botón header | cómo iniciar una medición rápida |
 
 > El tour hace scroll automático para mostrar cada zona. El tooltip personalizado es `HomeTourTooltip`.
 

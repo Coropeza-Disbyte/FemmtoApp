@@ -1,5 +1,5 @@
 {
-  "current": "3.8.0",
+  "current": "4.0.0",
 
   "featureCatalog": {
     "Welcome":                     { "pageObjectFile": "src/pages/welcome/WelcomePage.js",                   "specFile": "tests/specs/welcome/welcome.spec.js",                  "doc": "docs/specs/auth/Welcome.md" },
@@ -51,6 +51,77 @@
   },
 
   "versions": {
+    "4.0.0": {
+      "apk": "4.0.0(1023).apk",
+      "branch": "feat/version-4.0.0",
+      "date": "2026-05-19",
+      "appEntryFlow": "Welcome → MeetUser → NotificationPermission → FirstMeasure → SaveOnboardingProgress (nuevos usuarios). Login directo (usuarios existentes). Post-login: TourGuide en Home (4 pasos, una sola vez, persiste en AsyncStorage clave @femmto/home_tour_v1).",
+      "releaseHighlights": [
+        "Rebranding completo del Home: ObjectiveTabs reemplaza FavoritesSelector",
+        "Bottom nav: 5 tabs → 4 tabs (eliminado tab 'Medición')",
+        "Header: botón ayuda → botón 'Nueva medición' con routing inteligente por métrica activa",
+        "Sistema TourGuide de onboarding: 4 pasos, una sola vez, persiste en AsyncStorage",
+        "TrendsSection y HealthyHabitSection integradas en el Home",
+        "Grid de métricas 2 columnas ('Métricas de salud' reemplaza 'Últimas mediciones')",
+        "Paleta de colores centralizada en measurementColors.js",
+        "new-scale-measure-flow: vinculación inmediata de balanza sin esperar estabilización",
+        "Bluetooth: fix para Android 17 (ya no cuelga al verificar Bluetooth)"
+      ],
+      "features": {
+        "Welcome":                        { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "Login":                          { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "SignUp":                         { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "ResetPassword":                  { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "NotificationPermission":         { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "MeetUser":                       { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "SaveOnboardingProgress":         { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "NewUserIntro":                   { "pageObject": false, "spec": false, "stack": "auth" },
+        "Notifications":                  { "pageObject": false, "spec": false, "stack": "nested",     "since": "3.7.2" },
+        "OnBoarding/SetName":             { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetBirthdate":        { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetGender":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetWeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetHeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetPicture":          { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "Home":                           { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Devices":                        { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "NewMedition":                    { "pageObject": true,  "spec": true,  "stack": "tabs",       "note": "Tab eliminado en v4.0.0 — acceso via botón Nueva medición en header del Home" },
+        "Reminders":                      { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Share":                          { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Profile":                        { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "Menu":                           { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightDetails":                  { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PresureDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "HeartRateDetails":               { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "MetabolismDetails":              { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "StepsDetails":                   { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "WeightMeasurementHistory":       { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseMeasurementHistory":      { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "HeartRateMeasurementHistory":    { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "PreasureMeasurementHistory":     { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "StepsHistory":                   { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "MetabolismMeasurementHistory":   { "pageObject": false, "spec": false, "stack": "nested" },
+        "AddGlucoseMeasure":              { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewGlucometerMedition":          { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewPreasureOCRMedition":         { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewScaleMedition":               { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "FirstMeasure":                   { "pageObject": true,  "spec": true,  "stack": "medition",   "since": "3.6.0" },
+        "BluetoothPreasureMeasure":       { "pageObject": false, "spec": false, "stack": "medition" },
+        "EditPreasureMeasure":            { "pageObject": false, "spec": false, "stack": "medition" },
+        "SuccessPreasureMeasurement":     { "pageObject": false, "spec": false, "stack": "medition" },
+        "LinkScale":                      { "pageObject": false, "spec": false, "stack": "medition" },
+        "AddChangeSymptoms":              { "pageObject": false, "spec": false, "stack": "home" },
+        "BluetoothGlucometerMeasure":     { "pageObject": false, "spec": false, "stack": "medition",   "since": "3.8.0" },
+        "HealthNativeIntro":              { "pageObject": false, "spec": false, "stack": "home",        "since": "3.8.0" }
+      },
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "La app usa solo texto visible como locator. Solicitar testID al equipo dev."
+      }
+    },
+
     "3.8.0": {
       "apk": "3.8.0.apk",
       "branch": "feat/version-3.8.0",

@@ -114,17 +114,21 @@ function launchPipeline({ version, build, prevVersion, prevBuild }) {
     '--prev-build',   String(prevBuild || 0),
   ];
 
+  const logFile  = path.join(__dirname, `pipeline-${version}-${build}.log`);
+  const logStream = fs.openSync(logFile, 'a');
+
   log(`Pipeline → v${version}(${build})  [prev: v${prevVersion || '?'}(${prevBuild || 0})]`);
+  log(`Log: ${logFile}`);
 
   const child = spawn(process.execPath, args, {
-    cwd:   FRAMEWORK_ROOT,
-    stdio: 'inherit',
+    cwd:      FRAMEWORK_ROOT,
+    stdio:    ['ignore', logStream, logStream],
+    detached: true,
   });
 
+  child.unref();
+
   child.on('error', (err) => logError(`Pipeline no pudo iniciarse: ${err.message}`));
-  child.on('close', (code) => {
-    if (code !== 0) logError(`Pipeline terminó con código ${code}`);
-  });
 }
 
 // ─── Procesamiento de APK local ───────────────────────────────────────────────

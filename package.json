@@ -11,6 +11,8 @@
     "test:spec": "wdio run wdio.conf.js",
     "appium": "appium",
     "emulator": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe -avd Pixel_7",
+    "emulator:mainstream": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe -avd AVD_ARG_Mainstream -port 5556",
+    "emulator:midrange": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe -avd AVD_ARG_MidRange -port 5558",
     "emulator:wait": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe wait-for-device shell \"while [ $(getprop sys.boot_completed) != 1 ]; do sleep 2; done; echo Device ready\"",
     "devices": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe devices",
     "coverage": "node src/config/coverage.js",
