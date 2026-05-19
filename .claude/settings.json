@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm test)",
+      "Bash(wdio run *)",
+      "Bash(node src/config/coverage.js *)",
+      "PowerShell(& \"C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" *)",
+      "PowerShell(& \"C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe\" *)",
+      "PowerShell(Start-Process -FilePath \"C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe\" *)"
+    ]
+  }
+}

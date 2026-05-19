@@ -1,0 +1,9 @@
+node_modules/
+apps/*.apk
+apps/*.aab
+.env
+*.log
+allure-results/
+allure-report/
+screenshots/
+ui_*.xml

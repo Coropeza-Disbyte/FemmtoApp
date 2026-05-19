@@ -1,0 +1,38 @@
+{
+  "name": "mobile-automation-framework",
+  "version": "1.0.0",
+  "description": "Mobile E2E automation framework — Android Native (Appium + WebdriverIO)",
+  "scripts": {
+    "test": "wdio run wdio.conf.js",
+    "test:smoke": "wdio run wdio.conf.js --suite smoke",
+    "test:regression": "wdio run wdio.conf.js --suite regression",
+    "test:critical": "wdio run wdio.conf.js --suite critical",
+    "test:auth": "wdio run wdio.conf.js --suite auth",
+    "test:spec": "wdio run wdio.conf.js",
+    "appium": "appium",
+    "emulator": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe -avd Pixel_7",
+    "emulator:wait": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe wait-for-device shell \"while [ $(getprop sys.boot_completed) != 1 ]; do sleep 2; done; echo Device ready\"",
+    "devices": "C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe devices",
+    "coverage": "node src/config/coverage.js",
+    "coverage:v4.0.0": "node src/config/coverage.js 4.0.0",
+    "coverage:v3.8.0": "node src/config/coverage.js 3.8.0",
+    "coverage:v3.7.3": "node src/config/coverage.js 3.7.3",
+    "coverage:v3.3.0": "node src/config/coverage.js 3.3.0",
+    "coverage:v3.1.0": "node src/config/coverage.js 3.1.0",
+    "coverage:v3.0.1": "node src/config/coverage.js 3.0.1",
+    "watch:apk": "node scripts/watch-apk.js",
+    "pipeline": "node scripts/run-pipeline.js"
+  },
+  "devDependencies": {
+    "@wdio/appium-service": "^9.0.0",
+    "@wdio/cli": "^9.0.0",
+    "@wdio/local-runner": "^9.0.0",
+    "@wdio/mocha-framework": "^9.0.0",
+    "@wdio/spec-reporter": "^9.0.0",
+    "adm-zip": "^0.5.17",
+    "appium": "^2.5.0",
+    "appium-uiautomator2-driver": "^3.0.0",
+    "chokidar": "^5.0.0",
+    "dotenv": "^16.4.5"
+  }
+}

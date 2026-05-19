@@ -1,0 +1,500 @@
+{
+  "current": "3.8.0",
+
+  "featureCatalog": {
+    "Welcome":                     { "pageObjectFile": "src/pages/welcome/WelcomePage.js",                   "specFile": "tests/specs/welcome/welcome.spec.js",                  "doc": "docs/specs/auth/Welcome.md" },
+    "Login":                       { "pageObjectFile": "src/pages/auth/LoginPage.js",                        "specFile": "tests/specs/auth/login.spec.js",                        "doc": "docs/specs/auth/Login.md" },
+    "SignUp":                      { "pageObjectFile": "src/pages/auth/SignUpPage.js",                       "specFile": "tests/specs/auth/signup.spec.js",                       "doc": "docs/specs/auth/SignUp.md" },
+    "ResetPassword":               { "pageObjectFile": "src/pages/auth/ResetPasswordPage.js",                "specFile": "tests/specs/auth/resetPassword.spec.js",                "doc": "docs/specs/auth/ResetPassword.md" },
+    "NotificationPermission":      { "pageObjectFile": "src/pages/auth/NotificationPermissionPage.js",       "specFile": "tests/specs/auth/signup.spec.js",                       "doc": "docs/specs/auth/NotificationPermission.md" },
+    "MeetUser":                    { "pageObjectFile": "src/pages/auth/MeetUserPage.js",                     "specFile": "tests/specs/auth/meetUser.spec.js",                     "doc": "docs/specs/auth/MeetUser.md" },
+    "SaveOnboardingProgress":      { "pageObjectFile": "src/pages/auth/SaveOnboardingProgressPage.js",       "specFile": "tests/specs/auth/saveOnboardingProgress.spec.js",       "doc": "docs/specs/auth/SaveOnboardingProgress.md" },
+    "NewUserIntro":                {                                                                                                                                               "doc": "docs/specs/auth/NewUserIntro.md" },
+    "Notifications":               {                                                                                                                                               "doc": "docs/specs/auth/Notifications.md" },
+    "OnBoarding/SetName":          { "pageObjectFile": "src/pages/onboarding/SetNamePage.js",                "specFile": "tests/specs/onboarding/onboarding.spec.js",             "doc": "docs/specs/auth/Onboarding.md" },
+    "OnBoarding/SetBirthdate":     { "pageObjectFile": "src/pages/onboarding/SetBirthdatePage.js",           "specFile": "tests/specs/onboarding/onboarding.spec.js",             "doc": "docs/specs/auth/Onboarding.md" },
+    "OnBoarding/SetGender":        { "pageObjectFile": "src/pages/onboarding/SetGenderPage.js",              "specFile": "tests/specs/onboarding/onboarding.spec.js",             "doc": "docs/specs/auth/Onboarding.md" },
+    "OnBoarding/SetWeight":        { "pageObjectFile": "src/pages/onboarding/SetWeightPage.js",              "specFile": "tests/specs/onboarding/onboarding.spec.js",             "doc": "docs/specs/auth/Onboarding.md" },
+    "OnBoarding/SetHeight":        { "pageObjectFile": "src/pages/onboarding/SetHeightPage.js",              "specFile": "tests/specs/onboarding/onboarding.spec.js",             "doc": "docs/specs/auth/Onboarding.md" },
+    "OnBoarding/SetPicture":       { "pageObjectFile": "src/pages/onboarding/SetPicturePage.js",             "specFile": "tests/specs/onboarding/onboarding.spec.js",             "doc": "docs/specs/auth/Onboarding.md" },
+    "Home":                        { "pageObjectFile": "src/pages/home/HomePage.js",                         "specFile": "tests/specs/home/home.spec.js",                         "doc": "docs/specs/home/Home.md" },
+    "Devices":                     { "pageObjectFile": "src/pages/tabs/DevicesPage.js",                      "specFile": "tests/specs/tabs/devices.spec.js",                      "doc": "docs/specs/tabs/Devices.md" },
+    "NewMedition":                 { "pageObjectFile": "src/pages/tabs/MeditionPage.js",                     "specFile": "tests/specs/tabs/medition.spec.js",                     "doc": "docs/specs/tabs/NewMedition.md" },
+    "Reminders":                   { "pageObjectFile": "src/pages/tabs/RemindersPage.js",                    "specFile": "tests/specs/tabs/reminders.spec.js",                    "doc": "docs/specs/tabs/Reminders.md" },
+    "Share":                       { "pageObjectFile": "src/pages/tabs/SharePage.js",                        "specFile": "tests/specs/tabs/share.spec.js",                        "doc": "docs/specs/tabs/Share.md" },
+    "Profile":                     { "pageObjectFile": "src/pages/profile/ProfilePage.js",                   "specFile": "tests/specs/profile/profile.spec.js",                   "doc": "docs/specs/profile/Profile.md" },
+    "Menu":                        { "pageObjectFile": "src/pages/profile/MenuPage.js",                      "specFile": "tests/specs/profile/profile.spec.js",                   "doc": "docs/specs/profile/Menu.md" },
+    "WeightDetails":               { "pageObjectFile": "src/pages/metrics/WeightDetailsPage.js",             "specFile": "tests/specs/metrics/metricsDetail.spec.js",             "doc": "docs/specs/metrics/WeightDetails.md" },
+    "PresureDetails":              { "pageObjectFile": "src/pages/metrics/PresureDetailsPage.js",            "specFile": "tests/specs/metrics/metricsDetail.spec.js",             "doc": "docs/specs/metrics/PresureDetails.md" },
+    "GlucoseDetails":              { "pageObjectFile": "src/pages/metrics/GlucoseDetailsPage.js",            "specFile": "tests/specs/metrics/metricsDetail.spec.js",             "doc": "docs/specs/metrics/GlucoseDetails.md" },
+    "HeartRateDetails":            { "pageObjectFile": "src/pages/metrics/HeartRateDetailsPage.js",          "specFile": "tests/specs/metrics/metricsDetail.spec.js",             "doc": "docs/specs/metrics/HeartRateDetails.md" },
+    "MetabolismDetails":           { "pageObjectFile": "src/pages/metrics/MetabolismDetailsPage.js",         "specFile": "tests/specs/metrics/metricsDetail.spec.js",             "doc": "docs/specs/metrics/MetabolismDetails.md" },
+    "StepsDetails":                { "pageObjectFile": "src/pages/metrics/StepsDetailsPage.js",              "specFile": "tests/specs/metrics/metricsDetail.spec.js",             "doc": "docs/specs/metrics/StepsDetails.md" },
+    "WeightMeasurementHistory":    { "pageObjectFile": "src/pages/metrics/WeightHistoryPage.js",             "specFile": "tests/specs/metrics/measurementHistory.spec.js",        "doc": "docs/specs/metrics/WeightHistory.md" },
+    "GlucoseMeasurementHistory":   { "pageObjectFile": "src/pages/metrics/GlucoseHistoryPage.js",            "specFile": "tests/specs/metrics/measurementHistory.spec.js",        "doc": "docs/specs/metrics/GlucoseHistory.md" },
+    "HeartRateMeasurementHistory": { "pageObjectFile": "src/pages/metrics/HeartRateHistoryPage.js",          "specFile": "tests/specs/metrics/measurementHistory.spec.js",        "doc": "docs/specs/metrics/HeartRateHistory.md" },
+    "PreasureMeasurementHistory":  { "pageObjectFile": "src/pages/metrics/PresureHistoryPage.js",            "specFile": "tests/specs/metrics/measurementHistory.spec.js",        "doc": "docs/specs/metrics/PresureHistory.md" },
+    "StepsHistory":                { "pageObjectFile": "src/pages/metrics/StepsHistoryPage.js",              "specFile": "tests/specs/metrics/measurementHistory.spec.js",        "doc": "docs/specs/metrics/StepsHistory.md" },
+    "MetabolismMeasurementHistory":{                                                                                                                                               "doc": "docs/specs/metrics/MetabolismHistory.md" },
+    "AddGlucoseMeasure":           { "pageObjectFile": "src/pages/medition/AddGlucosePage.js",               "specFile": "tests/specs/medition/newMedition.spec.js",              "doc": "docs/specs/medition/AddGlucoseMeasure.md" },
+    "NewGlucometerMedition":       { "pageObjectFile": "src/pages/medition/NewGlucometerPage.js",            "specFile": "tests/specs/medition/newMedition.spec.js",              "doc": "docs/specs/medition/NewGlucometerMedition.md" },
+    "NewPreasureOCRMedition":      { "pageObjectFile": "src/pages/medition/NewPresurePage.js",               "specFile": "tests/specs/medition/newMedition.spec.js",              "doc": "docs/specs/medition/NewPresureOCRMedition.md" },
+    "NewScaleMedition":            { "pageObjectFile": "src/pages/medition/NewScalePage.js",                 "specFile": "tests/specs/medition/newMedition.spec.js",              "doc": "docs/specs/medition/NewScaleMedition.md" },
+    "FirstMeasure":                { "pageObjectFile": "src/pages/medition/FirstMeasurePage.js",             "specFile": "tests/specs/auth/saveOnboardingProgress.spec.js",       "doc": "docs/specs/medition/FirstMeasure.md" },
+    "BluetoothPreasureMeasure":    {                                                                                                                                               "doc": "docs/specs/medition/BluetoothPreasureMeasure.md" },
+    "EditPreasureMeasure":         {                                                                                                                                               "doc": "docs/specs/medition/EditPreasureMeasure.md" },
+    "SuccessPreasureMeasurement":  {                                                                                                                                               "doc": "docs/specs/medition/SuccessPreasureMeasurement.md" },
+    "LinkScale":                   {                                                                                                                                               "doc": "docs/specs/medition/LinkScale.md" },
+    "AddChangeSymptoms":           {                                                                                                                                               "doc": "docs/specs/home/AddChangeSymptoms.md" },
+    "BluetoothGlucometerMeasure":  {                                                                                                                                               "doc": "docs/specs/medition/BluetoothGlucometerMeasure.md" },
+    "HealthNativeIntro":           {                                                                                                                                               "doc": "docs/specs/home/HealthNativeIntro.md" }
+  },
+
+  "versions": {
+    "3.8.0": {
+      "apk": "3.8.0.apk",
+      "branch": "feat/version-3.8.0",
+      "date": "2026-05-12",
+      "appEntryFlow": "Welcome → MeetUser → NotificationPermission → FirstMeasure → SaveOnboardingProgress (nuevos usuarios). Login directo (usuarios existentes).",
+      "features": {
+        "Welcome":                        { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "Login":                          { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "SignUp":                         { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "ResetPassword":                  { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "NotificationPermission":         { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "MeetUser":                       { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "SaveOnboardingProgress":         { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "NewUserIntro":                   { "pageObject": false, "spec": false, "stack": "auth" },
+        "Notifications":                  { "pageObject": false, "spec": false, "stack": "nested",     "since": "3.7.2" },
+        "OnBoarding/SetName":             { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetBirthdate":        { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetGender":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetWeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetHeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetPicture":          { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "Home":                           { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Devices":                        { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "NewMedition":                    { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Reminders":                      { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Share":                          { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Profile":                        { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "Menu":                           { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightDetails":                  { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PresureDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "HeartRateDetails":               { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "MetabolismDetails":              { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "StepsDetails":                   { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "WeightMeasurementHistory":       { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseMeasurementHistory":      { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "HeartRateMeasurementHistory":    { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "PreasureMeasurementHistory":     { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "StepsHistory":                   { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "MetabolismMeasurementHistory":   { "pageObject": false, "spec": false, "stack": "nested" },
+        "AddGlucoseMeasure":              { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewGlucometerMedition":          { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewPreasureOCRMedition":         { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewScaleMedition":               { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "FirstMeasure":                   { "pageObject": true,  "spec": true,  "stack": "medition",   "since": "3.6.0" },
+        "BluetoothPreasureMeasure":       { "pageObject": false, "spec": false, "stack": "medition" },
+        "EditPreasureMeasure":            { "pageObject": false, "spec": false, "stack": "medition" },
+        "SuccessPreasureMeasurement":     { "pageObject": false, "spec": false, "stack": "medition" },
+        "LinkScale":                      { "pageObject": false, "spec": false, "stack": "medition" },
+        "AddChangeSymptoms":              { "pageObject": false, "spec": false, "stack": "home" },
+        "BluetoothGlucometerMeasure":     { "pageObject": false, "spec": false, "stack": "medition",   "since": "3.8.0" },
+        "HealthNativeIntro":              { "pageObject": false, "spec": false, "stack": "home",        "since": "3.8.0" }
+      },
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "La app usa solo texto visible como locator. Solicitar testID al equipo dev."
+      }
+    },
+
+    "3.7.3": {
+      "apk": "3.8.0(1017).apk",
+      "branch": "feat/version-3.7.3",
+      "date": "2026-05-08",
+      "screensAusentes": ["BluetoothGlucometerMeasure", "HealthNativeIntro"],
+      "features": {
+        "Welcome":                        { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "Login":                          { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "SignUp":                         { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "ResetPassword":                  { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "NotificationPermission":         { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "MeetUser":                       { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "SaveOnboardingProgress":         { "pageObject": true,  "spec": true,  "stack": "auth",       "since": "3.6.0" },
+        "NewUserIntro":                   { "pageObject": false, "spec": false, "stack": "auth" },
+        "Notifications":                  { "pageObject": false, "spec": false, "stack": "nested",     "since": "3.7.2" },
+        "OnBoarding/SetName":             { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetBirthdate":        { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetGender":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetWeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetHeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetPicture":          { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "Home":                           { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Devices":                        { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "NewMedition":                    { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Reminders":                      { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Share":                          { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Profile":                        { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "Menu":                           { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightDetails":                  { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PresureDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "HeartRateDetails":               { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "MetabolismDetails":              { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "StepsDetails":                   { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "WeightMeasurementHistory":       { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseMeasurementHistory":      { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "HeartRateMeasurementHistory":    { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "PreasureMeasurementHistory":     { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "StepsHistory":                   { "pageObject": true,  "spec": true,  "stack": "nested",     "since": "3.4.0" },
+        "MetabolismMeasurementHistory":   { "pageObject": false, "spec": false, "stack": "nested" },
+        "AddGlucoseMeasure":              { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewGlucometerMedition":          { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewPreasureOCRMedition":         { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewScaleMedition":               { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "FirstMeasure":                   { "pageObject": true,  "spec": true,  "stack": "medition",   "since": "3.6.0" },
+        "BluetoothPreasureMeasure":       { "pageObject": false, "spec": false, "stack": "medition" },
+        "EditPreasureMeasure":            { "pageObject": false, "spec": false, "stack": "medition" },
+        "SuccessPreasureMeasurement":     { "pageObject": false, "spec": false, "stack": "medition" },
+        "LinkScale":                      { "pageObject": false, "spec": false, "stack": "medition" },
+        "AddChangeSymptoms":              { "pageObject": false, "spec": false, "stack": "home" }
+      },
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "La app usa solo texto visible como locator."
+      }
+    },
+
+    "3.7.2": {
+      "apk": null,
+      "branch": "feat/version-3.7.2",
+      "date": null,
+      "screensAusentes": ["BluetoothGlucometerMeasure", "HealthNativeIntro"],
+      "releaseHighlights": [
+        "Infraestructura de notificaciones y gestión de datos",
+        "Re-habilitación de edición de mediciones de glucosa y presión arterial",
+        "Incorporación de visualización y edición del país en Perfil",
+        "Resolución de crashes críticos y mejoras de performance"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.7.1": {
+      "apk": null,
+      "branch": "feat/version-3.7.1",
+      "date": null,
+      "screensAusentes": ["BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Hotfix: resolución del issue de conexión en balanzas B04 y B05"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.7.0": {
+      "apk": null,
+      "branch": "feat/version-3.7.0",
+      "date": null,
+      "screensAusentes": ["BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Actualización de SDKs y librerías a sus últimas versiones",
+        "Adecuación técnica para soporte de 16KB en Android",
+        "Fix en backend por issue de impedancia"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.6.0": {
+      "apk": null,
+      "branch": "feat/version-3.6.0",
+      "date": null,
+      "appEntryFlow": "Welcome → MeetUser (preguntas de objetivos) → NotificationPermission → FirstMeasure → SaveOnboardingProgress (para nuevos usuarios). Primera versión con onboarding gamificado.",
+      "screensIntroducidas": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure"],
+      "screensAusentes": ["BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Onboarding gamificado estilo Duolingo: recolección de datos de perfil y seteo de objetivos",
+        "Guardado de datos del onboarding en BD y tracking en Google Analytics",
+        "Nuevos instructivos de tensión (brazo y muñeca) antes de cada medición",
+        "Fix Android: registros de peso de Android Health ahora se acumulan en historial"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.5.0": {
+      "apk": null,
+      "branch": "feat/version-3.5.0",
+      "date": null,
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Rediseño de módulos Recordatorios y Reportes Compartidos",
+        "Integración de glucómetros Bluetooth con nuevo flujo de medición",
+        "Optimización de performance en panel de frecuencia cardíaca",
+        "Fix de crash al conectar con Android Health en Android 13 o inferior"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.4.0": {
+      "apk": null,
+      "branch": "feat/version-3.4.0",
+      "date": null,
+      "screensIntroducidas": ["HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory"],
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Integración nativa con Apple Health (iOS) y Health Connect (Android): pasos y frecuencia cardíaca",
+        "Renombramiento de 'Tensiómetros' a 'Monitores de Presión'",
+        "Fix: botón OK visible al guardar notas",
+        "Fix parcial BCS09: modal offline al medirse desde la app"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.3.0": {
+      "apk": null,
+      "branch": "feat/version-3.3.0",
+      "date": null,
+      "appEntryFlow": "Splash → Login (usuario existente) o SignUp → OnBoarding (datos biológicos) → NewUserIntro (swiper intro, primera vez post-registro). Sin Welcome, sin MeetUser.",
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Rediseño completo del flujo de medición de tensiómetros: experiencia más intuitiva y con menor margen de error"
+      ],
+      "features": {
+        "Login":                          { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "SignUp":                         { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "ResetPassword":                  { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "NewUserIntro":                   { "pageObject": false, "spec": false, "stack": "auth" },
+        "OnBoarding/SetName":             { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetBirthdate":        { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetGender":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetWeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetHeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetPicture":          { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "Home":                           { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Devices":                        { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "NewMedition":                    { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Reminders":                      { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Share":                          { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Profile":                        { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "Menu":                           { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightDetails":                  { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PresureDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "MetabolismDetails":              { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightMeasurementHistory":       { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseMeasurementHistory":      { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PreasureMeasurementHistory":     { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "MetabolismMeasurementHistory":   { "pageObject": false, "spec": false, "stack": "nested" },
+        "AddGlucoseMeasure":              { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewGlucometerMedition":          { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewPreasureOCRMedition":         { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewScaleMedition":               { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "BluetoothPreasureMeasure":       { "pageObject": false, "spec": false, "stack": "medition" },
+        "EditPreasureMeasure":            { "pageObject": false, "spec": false, "stack": "medition" },
+        "SuccessPreasureMeasurement":     { "pageObject": false, "spec": false, "stack": "medition" },
+        "LinkScale":                      { "pageObject": false, "spec": false, "stack": "medition" },
+        "AddChangeSymptoms":              { "pageObject": false, "spec": false, "stack": "home" }
+      },
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.2.2": {
+      "apk": null,
+      "branch": "feat/version-3.2.2",
+      "date": null,
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Events Tracking Revamp: recolección de información de comportamiento de usuarios",
+        "Fix en flujo de reseñas: no se repite solicitud si el usuario la omite",
+        "Fix OCR para mediciones de presión arterial en Android"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.2.1": {
+      "apk": null,
+      "branch": "feat/version-3.2.1",
+      "date": null,
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Nuevo SDK para producto AIO (All in One)",
+        "Nuevo flujo de reseñas (OKR: incrementar rating a 4.5★)",
+        "Fix: corrección del reporte con métricas sobredimensionadas"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.2.0": {
+      "apk": null,
+      "branch": "feat/version-3.2.0",
+      "date": null,
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Soporte para tensiómetros de muñeca: conexión y registro de mediciones",
+        "Onboarding renovado y optimizado",
+        "Actualización de Términos de Servicio y Política de Privacidad"
+      ],
+      "features": {},
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.1.0": {
+      "apk": "3.1.0.apk",
+      "branch": "feat/version-3.1.0",
+      "date": "2024-09-11",
+      "appEntryFlow": "Splash → Login directo. Sin pantalla Welcome con opciones, sin flujo MeetUser para nuevos usuarios.",
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "releaseHighlights": [
+        "Migración completa a AWS",
+        "Integración con báscula corporal BWS12",
+        "App disponible en Ecuador para iOS",
+        "Nueva opción 'Eliminar cuenta' en Mi Cuenta",
+        "Nuevo Módulo Admin: ventanas de mantenimiento, actualización requerida y modal de actualización opcional",
+        "Flujo unificado de mediciones",
+        "Recuperación de contraseña optimizada",
+        "Fix componente fecha de nacimiento en Android",
+        "Update balanza BCS07: nombre del usuario en visor"
+      ],
+      "features": {
+        "Login":                          { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "SignUp":                         { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "ResetPassword":                  { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "NewUserIntro":                   { "pageObject": false, "spec": false, "stack": "auth" },
+        "OnBoarding/SetName":             { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetBirthdate":        { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetGender":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetWeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetHeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetPicture":          { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "Home":                           { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Devices":                        { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "NewMedition":                    { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Reminders":                      { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Share":                          { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Profile":                        { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "Menu":                           { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightDetails":                  { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PresureDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "MetabolismDetails":              { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightMeasurementHistory":       { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseMeasurementHistory":      { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PreasureMeasurementHistory":     { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "MetabolismMeasurementHistory":   { "pageObject": false, "spec": false, "stack": "nested" },
+        "AddGlucoseMeasure":              { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewGlucometerMedition":          { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewPreasureOCRMedition":         { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewScaleMedition":               { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "BluetoothPreasureMeasure":       { "pageObject": false, "spec": false, "stack": "medition" },
+        "EditPreasureMeasure":            { "pageObject": false, "spec": false, "stack": "medition" },
+        "SuccessPreasureMeasurement":     { "pageObject": false, "spec": false, "stack": "medition" },
+        "LinkScale":                      { "pageObject": false, "spec": false, "stack": "medition" },
+        "AddChangeSymptoms":              { "pageObject": false, "spec": false, "stack": "home" }
+      },
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "Versión histórica — no se ejecutaron tests con este framework."
+      }
+    },
+
+    "3.0.1": {
+      "apk": "3.0.1.apk",
+      "branch": "feat/version-3.0.1",
+      "date": "2024-05-01",
+      "appEntryFlow": "Splash → Login directo. Sin Welcome, sin MeetUser. OnBoarding post-registro.",
+      "screensAusentes": ["Welcome", "MeetUser", "NotificationPermission", "SaveOnboardingProgress", "FirstMeasure", "HeartRateDetails", "HeartRateMeasurementHistory", "StepsDetails", "StepsHistory", "BluetoothGlucometerMeasure", "HealthNativeIntro", "Notifications"],
+      "features": {
+        "Login":                          { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "SignUp":                         { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "ResetPassword":                  { "pageObject": true,  "spec": true,  "stack": "auth" },
+        "NewUserIntro":                   { "pageObject": false, "spec": false, "stack": "auth" },
+        "OnBoarding/SetName":             { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetBirthdate":        { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetGender":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetWeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetHeight":           { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "OnBoarding/SetPicture":          { "pageObject": true,  "spec": true,  "stack": "onboarding" },
+        "Home":                           { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Devices":                        { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "NewMedition":                    { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Reminders":                      { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Share":                          { "pageObject": true,  "spec": true,  "stack": "tabs" },
+        "Profile":                        { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "Menu":                           { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightDetails":                  { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PresureDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseDetails":                 { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "MetabolismDetails":              { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "WeightMeasurementHistory":       { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "GlucoseMeasurementHistory":      { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "PreasureMeasurementHistory":     { "pageObject": true,  "spec": true,  "stack": "nested" },
+        "MetabolismMeasurementHistory":   { "pageObject": false, "spec": false, "stack": "nested" },
+        "AddGlucoseMeasure":              { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewGlucometerMedition":          { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewPreasureOCRMedition":         { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "NewScaleMedition":               { "pageObject": true,  "spec": true,  "stack": "medition" },
+        "BluetoothPreasureMeasure":       { "pageObject": false, "spec": false, "stack": "medition" },
+        "EditPreasureMeasure":            { "pageObject": false, "spec": false, "stack": "medition" },
+        "SuccessPreasureMeasurement":     { "pageObject": false, "spec": false, "stack": "medition" },
+        "LinkScale":                      { "pageObject": false, "spec": false, "stack": "medition" },
+        "AddChangeSymptoms":              { "pageObject": false, "spec": false, "stack": "home" }
+      },
+      "accessibility": {
+        "hasTestID": false,
+        "hasAccessibilityLabel": false,
+        "note": "La app usa solo texto visible como locator. Solicitar testID al equipo dev."
+      }
+    }
+  }
+}
