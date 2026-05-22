@@ -23,7 +23,10 @@
     "coverage:v3.1.0": "node src/config/coverage.js 3.1.0",
     "coverage:v3.0.1": "node src/config/coverage.js 3.0.1",
     "watch:apk": "node scripts/watch-apk.js",
-    "pipeline": "node scripts/run-pipeline.js"
+    "pipeline": "node scripts/run-pipeline.js",
+    "pipeline:validate": "node scripts/validate-pipeline.js",
+    "pipeline:validate:smoke": "node scripts/validate-pipeline.js --smoke",
+    "monitor": "node scripts/qa-monitor.js"
   },
   "devDependencies": {
     "@wdio/appium-service": "^9.0.0",

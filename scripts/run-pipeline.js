@@ -13,7 +13,7 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const { execSync, spawn } = require('child_process');
+const { execSync, spawn, spawnSync } = require('child_process');
 const path = require('path');
 const fs   = require('fs');
 
@@ -21,6 +21,22 @@ const fs   = require('fs');
 
 const FRAMEWORK_ROOT = path.resolve(__dirname, '..');
 const RN_REPO_PATH   = process.env.RN_REPO_PATH;
+
+function findClaudeExe() {
+  // Preferir el .exe directo — evita que cmd.exe interprete %20, corchetes y tildes del prompt
+  const appdata = process.env.APPDATA;
+  if (appdata) {
+    const exePath = path.join(appdata, 'npm', 'node_modules', '@anthropic-ai', 'claude-code', 'bin', 'claude.exe');
+    if (fs.existsSync(exePath)) return exePath;
+  }
+  // Fallback: buscar via where (puede devolver .cmd — se usa con shell: true)
+  try {
+    const result = execSync('where claude', { encoding: 'utf8', shell: true });
+    const lines = result.trim().split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    return lines.find(l => l.endsWith('.exe')) || lines.find(l => l.endsWith('.cmd')) || lines[0];
+  } catch {}
+  return 'claude';
+}
 const ADB          = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe';
 const EMULATOR_EXE = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe';
 
@@ -108,12 +124,21 @@ function stepClaudeAnalysis(version, prevVersion, prevBuild, isVersionBump) {
   log(`Tipo: ${isVersionBump ? 'Version bump → docs + test plan' : 'Build fix → solo docs'}`, 'STEP');
   log('Invocando Claude...', 'STEP');
 
+  const claudeExe = findClaudeExe();
+  log(`Ejecutable: ${claudeExe}`, 'STEP');
+
   try {
-    execSync(`claude --print "${prompt.replace(/"/g, "'")}"`, {
+    const useShell = !claudeExe.endsWith('.exe');
+    const result = spawnSync(claudeExe, ['--print', prompt], {
       cwd:     FRAMEWORK_ROOT,
       stdio:   'inherit',
       timeout: 1_200_000, // 20 min — límite máximo para análisis de repo RN
+      shell:   useShell,  // false cuando es .exe directo — evita interpretación de cmd.exe
     });
+    if (result.error) throw result.error;
+    if (result.status !== 0) {
+      throw new Error(`claude salió con código ${result.status}`);
+    }
     log('Análisis completado', 'OK');
   } catch (err) {
     log(`Claude analysis falló: ${err.message}`, 'WARN');

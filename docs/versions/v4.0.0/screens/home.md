@@ -3,7 +3,8 @@ version: 4.0.0
 screen: home
 risk_level: high
 since: 3.0.1
-last_modified: 2026-05-19
+last_modified: 2026-05-20
+build: 1025
 source_files:
   - src/features/Home/containers/Overview/index.js
   - src/features/Home/containers/Overview/sections/ObjectiveTabs/TabsSection.js
@@ -13,7 +14,7 @@ source_files:
   - src/features/Home/containers/Overview/sections/ObjectiveTabs/ReorderTabsModal.js
   - src/features/Home/containers/Overview/sections/HealthMetrics/index.js
   - src/features/Home/containers/Overview/sections/TrendsSection/index.js
-  - src/features/Home/components/HomeHeader.js
+  - src/components/HomeHeader/index.js
   - src/theme/measurementColors.js
 spec_file: tests/specs/home/home.spec.js
 page_object: src/pages/home/HomePage.js
@@ -48,33 +49,41 @@ En v4.0.0 el tab "Medición" fue eliminado. El nav pasó de 5 a 4 tabs:
 
 ## Header (HomeHeader)
 
+Fuente: `src/components/HomeHeader/index.js`. El header tiene tres botones en la parte derecha (de izquierda a derecha):
+
 | Elemento | Tipo | Comportamiento |
 |----------|------|----------------|
-| Logo / nombre usuario | texto | visible en la parte izquierda |
-| Ícono notificaciones | botón (size 7) | navega a NotificationsScreen; muestra badge con conteo de no leídas |
-| Botón "Nueva medición" | botón (new-measure-icon) | navega a la pantalla de medición correspondiente según la métrica activa en ObjectiveTabs |
+| Logo / nombre usuario | texto | visible en la parte izquierda (UserHeader) |
+| Botón "Nueva medición" | botón (new-measure-icon) | 1er botón derecha — navega al flujo según tab activo; envuelto en `TourGuideZone zone={4}` |
+| Ícono notificaciones | botón (bell-icon, size 7) | 2do botón derecha — navega a NotificationsScreen; muestra badge rojo con conteo cuando `unreadCount > 0` y hay permisos |
+| Ícono menú | botón (menu-icon, size 7) | 3er botón derecha — navega a MenuOptions |
 
 > En v3.x el botón derecho del header era de ayuda/videos. En v4.0.0 fue reemplazado por "Nueva medición".
-> El tamaño del ícono de notificaciones aumentó de size 6 a size 7.
-> El borde inferior del header fue eliminado.
+> El tamaño del ícono de notificaciones es size 7.
+> El badge de notificaciones cambia `fontSize` a 6 si `unreadCount >= 100`.
 
 ### Routing inteligente del botón "Nueva medición"
 
-La pantalla de destino depende del tab activo en ObjectiveTabs:
+La pantalla de destino depende del `targetType` pasado por ObjectiveTabs (`onNewMeasurePress`):
 
-| Tab activo | Destino de medición |
-|------------|---------------------|
-| Peso | flujo de medición de balanza |
-| Presión arterial | flujo de medición de tensiómetro |
-| Glucosa | flujo de medición de glucómetro |
-| Pasos | no navega (datos desde Health) |
-| General | no navega (resumen sin medición directa) |
+| Tab activo | `targetType` | Destino de medición |
+|------------|--------------|---------------------|
+| Peso | `control_weight` | flujo de balanza (`initFlow` → `NewScaleMedition`) |
+| Presión arterial | `control_blood_pressure` | `NewPreasureOCRMedition` |
+| Glucosa | `control_glucose` | `NewGlucometerMedition` |
+| Pasos | `control_steps` | pantalla genérica de medición (`Measure`) |
+| General | `control_general` | pantalla genérica de medición (`Measure`) |
+
+> `control_steps` no está en el map de rutas — cae al `else` y navega a `Measure` (pantalla de selección general).
+> `control_general` sí está en el map y también navega a `Measure`.
 
 ---
 
 ## TourGuide — Sistema de onboarding interactivo
 
 Librería `rn-tourguide`. El tour se muestra una única vez por usuario (persiste en `AsyncStorage` con clave `@femmto/home_tour_v1`). Se completa antes de evaluar intro de HealthNative o perfil incompleto.
+
+**Persistencia (build 1025):** la clave `@femmto/home_tour_v1` se escribe en `AsyncStorage` **al iniciar el tour** (no al completarlo). Esto garantiza que si el usuario navega fuera a mitad del tour, al volver al Home el tour no reaparece. `tourStartedRef` previene múltiples disparos en la misma sesión.
 
 | Zona | Nro | Qué apunta | Texto del tooltip |
 |------|-----|------------|-------------------|
@@ -84,6 +93,7 @@ Librería `rn-tourguide`. El tour se muestra una única vez por usuario (persist
 | Nueva medición | 4 | botón header | cómo iniciar una medición rápida |
 
 > El tour hace scroll automático para mostrar cada zona. El tooltip personalizado es `HomeTourTooltip`.
+> El scroll para los pasos 1 y 2 usa `programmaticStopRef` para distinguir stop manual de stop por scroll — evita marcar el tour como completado prematuramente.
 
 ---
 
@@ -212,6 +222,15 @@ El componente `HealthMetricCard` centraliza los estilos de todas las cards de m�
 
 ---
 
+## Componentes persistentes en pantalla
+
+| Componente | Siempre visible | Descripción |
+|------------|-----------------|-------------|
+| `OptionalUpdateBottomSheet` | sí | sheet de actualización opcional; se auto-muestra si hay versión más reciente |
+| `FeedbackFlow` | sí | flujo de feedback en app; accede a soporte (`Support`) o menú con highlight de reseña (`MenuOptions?highlightReview=true`) |
+
+---
+
 ## Store — acciones relevantes
 
 | Acción | Qué hace |
@@ -244,3 +263,5 @@ El componente `HealthMetricCard` centraliza los estilos de todas las cards de m�
 |---------|------|-------------|
 | v3.0.1 | Baseline | Home con FavoritesSelector, 5 tabs en bottom nav, header con ícono de ayuda |
 | v4.0.0 | Rebranding completo | Eliminado tab Medición del nav; reemplazado FavoritesSelector por ObjectiveTabs; nuevo header con routing inteligente; TourGuide onboarding; TrendsSection; HealthyHabitSection; grid de métricas; measurementColors |
+| v4.0.0 (build 1024) | Correcciones docs | Path HomeHeader corregido a `src/components/HomeHeader/index.js`; routing de Pasos/General corregido (sí navegan a Measure); orden de botones del header documentado; FeedbackFlow y OptionalUpdateBottomSheet registrados |
+| v4.0.0 (build 1025) | Fix | TourGuide: clave `@femmto/home_tour_v1` escrita en AsyncStorage al **iniciar** el tour (no al completarlo) — evita re-aparición al navegar fuera a mitad del tour |
