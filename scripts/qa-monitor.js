@@ -20,6 +20,12 @@ const PORT = process.env.MONITOR_PORT || 3001;
 const ADB  = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe';
 const EMU  = 'C:\\Users\\coropeza2\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe';
 
+// Logos de la app — leídos del repo RN una sola vez al arrancar el servidor
+const RN_ASSETS = 'C:\\Users\\coropeza2\\Desktop\\Front FemmtoApp\\OCR%20Femmto%20-%20New%20App';
+function loadB64(p) { try { return fs.readFileSync(p).toString('base64'); } catch { return ''; } }
+const LOGO_ICON_B64 = loadB64(path.join(RN_ASSETS, 'assets', 'images', 'app-icon.png'));
+const LOGO_TEXT_B64 = loadB64(path.join(RN_ASSETS, 'android', 'app', 'src', 'main', 'res', 'drawable-xxxhdpi', 'text_logo.png'));
+
 // ─── Estado global ─────────────────────────────────────────────────────────────
 
 const state = {
@@ -608,9 +614,6 @@ const server = http.createServer(async (req, res) => {
 // ─── HTML ─────────────────────────────────────────────────────────────────────
 
 function buildHTML() {
-  const appVersion = process.env.APP_VERSION || '—';
-  const appPath    = path.basename(process.env.APP_PATH || '');
-
   return '<!DOCTYPE html>\n<html lang="es">\n<head>\n' +
 '<meta charset="UTF-8">\n' +
 '<title>QA Monitor</title>\n' +
@@ -619,8 +622,8 @@ function buildHTML() {
 CSS_BLOCK +
 '\n</style>\n</head>\n<body>\n' +
 HTML_BLOCK
-  .replace('__APP_VERSION__', appVersion)
-  .replace('__APP_PATH__', appPath) +
+  .replace('__LOGO_ICON__', LOGO_ICON_B64)
+  .replace('__LOGO_TEXT__', LOGO_TEXT_B64) +
 '\n<script>\n' +
 JS_BLOCK +
 '\n</script>\n</body>\n</html>';
@@ -643,10 +646,8 @@ body{background:var(--bg);color:var(--text);font:13px/1.5 -apple-system,BlinkMac
 /* ─── Top bar ─── */
 .topbar{display:flex;align-items:center;gap:12px;padding:0 16px;height:48px;
   background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0;z-index:10}
-.topbar .logo{font-size:14px;font-weight:700;color:var(--text);letter-spacing:.02em}
-.topbar .logo span{color:var(--green);margin-right:4px}
-.topbar .version-badge{background:var(--border2);border:1px solid var(--border);border-radius:20px;
-  padding:2px 10px;font-size:11px;color:var(--cyan);font-weight:600}
+.topbar .logo-icon{height:30px;border-radius:8px;flex-shrink:0}
+.topbar .logo-text{height:18px;flex-shrink:0;filter:invert(1);mix-blend-mode:screen}
 .topbar .pipeline-status{display:flex;align-items:center;gap:6px;font-size:12px;
   background:var(--border2);padding:4px 10px;border-radius:20px}
 .status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -866,8 +867,8 @@ tr:hover td{background:rgba(48,54,61,.3)}
 const HTML_BLOCK = `
 <!-- Top bar -->
 <div class="topbar">
-  <div class="logo"><span>●</span>QA Monitor</div>
-  <div class="version-badge" id="topVersion">v__APP_VERSION__ &nbsp;|&nbsp; __APP_PATH__</div>
+  <img class="logo-icon" src="data:image/png;base64,__LOGO_ICON__" alt="">
+  <img class="logo-text" src="data:image/png;base64,__LOGO_TEXT__" alt="femmto">
   <div class="pipeline-status" id="topStatus">
     <div class="status-dot idle" id="topDot"></div>
     <span id="topStatusText">Listo</span>

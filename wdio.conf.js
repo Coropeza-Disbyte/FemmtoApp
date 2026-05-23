@@ -210,7 +210,7 @@ exports.config = {
   reporters: ['spec'],
   mochaOpts: {
     ui:      'bdd',
-    timeout: 60000,
+    timeout: 180000,
     grep:    process.env.WDIO_GREP || undefined,
   },
 

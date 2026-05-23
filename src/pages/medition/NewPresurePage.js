@@ -12,10 +12,10 @@ class NewPresurePage extends BasePage {
   get badgeMonitorEncendido()     { return this.$text('Monitor encendido'); }
 
   // Botones de acción
-  get btnConectarMonitor()        { return this.$text('Conectar monitor de presión'); }
-  get btnMedicionInalambrica()    { return this.$text('Medición inálambrica'); }
-  get btnRegistrarManualmente()   { return this.$text('Registrar manualmente'); }
-  get btnEscanearPantalla()       { return this.$text('Escanear pantalla'); }
+  get btnConectarMonitor()        { return this.$('Conectar monitor de presión'); }
+  get btnMedicionInalambrica()    { return this.$('Medición inálambrica'); }
+  get btnRegistrarManualmente()   { return $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description("Registrar manualmente"))'); }
+  get btnEscanearPantalla()       { return this.$('Escanear pantalla'); }
 
   async isLoaded() {
     try {

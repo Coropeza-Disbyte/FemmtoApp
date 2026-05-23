@@ -13,9 +13,9 @@ class NewGlucometerPage extends BasePage {
 
   // Botones de acción
   // Texto varía según si hay dispositivo vinculado o no
-  get btnVincularGlucometro()     { return this.$text('Vincular glucómetro'); }
-  get btnMedicionInalambrica()    { return this.$text('Medición inálambrica'); }
-  get btnRegistrarManualmente()   { return this.$text('Registrar manualmente'); }
+  get btnVincularGlucometro()     { return this.$('Vincular glucómetro'); }
+  get btnMedicionInalambrica()    { return this.$('Medición inálambrica'); }
+  get btnRegistrarManualmente()   { return $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description("Registrar manualmente"))'); }
 
   async isLoaded() {
     // Esperar cualquiera de los dos títulos posibles

@@ -1,4 +1,5 @@
 > Antes de operar, leer: [IA.md](./IA.md) — Quality Intelligence Governance
+> Antes de escribir un selector o un tap, leer: [docs/AUTOMATION_QUIRKS.md](./docs/AUTOMATION_QUIRKS.md) — Comportamientos no-obvios del árbol UI
 
 # Mobile Automation Framework — Especificaciones del Proyecto
 

@@ -10,8 +10,9 @@ class NewScalePage extends BasePage {
   get textEligeOpcion()           { return this.$contains('Elige la opción que se adapte'); }
 
   // Botones
-  get btnConectarBalanza()        { return this.$text('Conectar balanza'); }
-  get btnMedicionInalambrica()    { return this.$text('Medición inalámbrica'); }
+  get btnConectarBalanza()        { return this.$('Conectar balanza'); }
+  get btnMedicionInalambrica()    { return this.$('Medición inalámbrica'); }
+  get btnRegistrarManualmente()   { return $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description("Registrar manualmente"))'); }
 
   async isLoaded() {
     await this.waitForScreen(this.screenTitle);

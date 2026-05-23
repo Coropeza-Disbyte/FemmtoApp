@@ -37,7 +37,7 @@ class MeditionPage extends BasePage {
 
   // ── Acciones ─────────────────────────────────────────────────────────────────
   async isLoaded() {
-    await this.waitForScreen(this.headerTitle);
+    await this.waitForScreen(this.textEligeMedirte);
     return true;
   }
 
