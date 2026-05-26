@@ -21,6 +21,7 @@ class NewScalePage extends BasePage {
 
   async tapConectarBalanza()      { await this.tap(this.btnConectarBalanza); }
   async tapMedicionInalambrica()  { await this.tap(this.btnMedicionInalambrica); }
+  async tapRegistrarManualmente() { await this.tap(this.btnRegistrarManualmente); }
 }
 
 module.exports = NewScalePage;

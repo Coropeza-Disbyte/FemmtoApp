@@ -1,18 +1,9 @@
-const LoginPage   = require('../../../src/pages/auth/LoginPage');
-const WelcomePage = require('../../../src/pages/welcome/WelcomePage');
-const credentials = require('../../../src/fixtures/auth/credentials');
-
-const navigateToLogin = async () => {
-  const pkg = process.env.APP_PACKAGE || 'com.femmto.app';
-  await driver.execute('mobile: shell', { command: 'pm',  args: ['clear', pkg] });
-  await driver.execute('mobile: shell', { command: 'am',  args: ['start', '-n', `${pkg}/.MainActivity`] });
-  await $('~Ya tengo una cuenta').waitForDisplayed({ timeout: 30000 });
-  await $('~Ya tengo una cuenta').click();
-  await $('android=new UiSelector().text("Ingresa a tu cuenta")').waitForDisplayed({ timeout: 15000 });
-};
+const LoginPage            = require('../../../src/pages/auth/LoginPage');
+const { launchClean }      = require('../../../src/flows/auth.flow');
+const credentials          = require('../../../src/fixtures/auth/credentials');
 
 describe('[auth] Login — validaciones de campos', () => {
-  beforeEach(navigateToLogin);
+  beforeEach(launchClean);
 
   it('should display all login fields', async () => {
     const page = new LoginPage();
@@ -69,7 +60,7 @@ describe('[auth] Login — validaciones de campos', () => {
 });
 
 describe('[auth] Login — credenciales válidas', () => {
-  beforeEach(navigateToLogin);
+  beforeEach(launchClean);
 
   it('should login successfully and leave login screen', async () => {
     const page = new LoginPage();

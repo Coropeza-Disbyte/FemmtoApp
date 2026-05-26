@@ -6,11 +6,14 @@ const credentials = require('../fixtures/auth/credentials');
  * Limpia el estado de la app y lanza desde cero.
  * Maneja la Welcome screen (presente desde v3.6.0) antes de llegar al Login.
  */
-async function launchClean() {
+async function launchToWelcome() {
   const pkg = process.env.APP_PACKAGE || 'com.femmto.app';
   await driver.execute('mobile: shell', { command: 'pm',  args: ['clear', pkg] });
   await driver.execute('mobile: shell', { command: 'am',  args: ['start', '-n', `${pkg}/.MainActivity`] });
+}
 
+async function launchClean() {
+  await launchToWelcome();
   // Welcome screen existe desde v3.6.0 — detectar por el botón (más fiable que la imagen)
   try {
     const btnYaTengoCuenta = $('android=new UiSelector().text("Ya tengo una cuenta")');
@@ -34,9 +37,14 @@ async function loginAs(user = credentials.validUser) {
 async function dismissTourIfPresent() {
   const { ANIMATION_TIMEOUT } = require('../config/timeouts');
   try {
+    // Esperar a que Home cargue antes de buscar el tour — en device físico la
+    // navegación post-login puede tardar más que en emulador
+    await $('~Home').waitForDisplayed({ timeout: 30000 });
     const btnOmitir = $('android=new UiSelector().text("Omitir")');
-    await btnOmitir.waitForDisplayed({ timeout: 20000 });
+    await btnOmitir.waitForDisplayed({ timeout: 10000 });
     await btnOmitir.click();
+    // Confirmar que el overlay desapareció antes de continuar
+    await btnOmitir.waitForDisplayed({ timeout: 5000, reverse: true });
     await driver.pause(ANIMATION_TIMEOUT);
   } catch {
     // Tour no presente (key ya seteada) o versión anterior a 4.0.0
@@ -49,4 +57,4 @@ async function launchAndLogin(user = credentials.validUser) {
   await dismissTourIfPresent();
 }
 
-module.exports = { launchClean, loginAs, launchAndLogin };
+module.exports = { launchToWelcome, launchClean, loginAs, launchAndLogin };

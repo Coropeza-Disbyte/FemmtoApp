@@ -1,29 +1,10 @@
+const { launchAndLogin } = require('../../../src/flows/auth.flow');
 const HomePage  = require('../../../src/pages/home/HomePage');
 const SharePage = require('../../../src/pages/tabs/SharePage');
-const credentials = require('../../../src/fixtures/auth/credentials');
-
-const loginAndGoHome = async () => {
-  const pkg = process.env.APP_PACKAGE || 'com.femmto.app';
-  await driver.execute('mobile: shell', { command: 'pm',  args: ['clear', pkg] });
-  await driver.execute('mobile: shell', { command: 'am',  args: ['start', '-n', `${pkg}/.MainActivity`] });
-  await $('~Ya tengo una cuenta').waitForDisplayed({ timeout: 30000 });
-  await $('~Ya tengo una cuenta').click();
-  await $('android=new UiSelector().text("Ingrese su email")').waitForDisplayed({ timeout: 15000 });
-  const emailField = $('android=new UiSelector().text("Ingrese su email")');
-  const passField  = $('android=new UiSelector().text("Ingrese su contraseña")');
-  await emailField.click();
-  await emailField.setValue(credentials.validUser.email);
-  await passField.click();
-  await passField.setValue(credentials.validUser.password);
-  await driver.hideKeyboard();
-  await $('~Ingresar').waitForDisplayed({ timeout: 10000 });
-  await $('~Ingresar').click();
-  await $('~Home').waitForDisplayed({ timeout: 30000 });
-};
 
 describe('[tabs] Share Metrics Screen', () => {
   beforeEach(async () => {
-    await loginAndGoHome();
+    await launchAndLogin();
     const home = new HomePage();
     await home.isLoaded();
     await home.navigateToShare();
@@ -81,7 +62,6 @@ describe('[tabs] Share Metrics Screen', () => {
     const page = new SharePage();
     await page.isLoaded();
     await page.tapPresionArterial();
-    // Verificar que el elemento sigue visible después de la interacción
     expect(await page.isDisplayed(page.checkPresionArterial)).toBe(true);
   });
 

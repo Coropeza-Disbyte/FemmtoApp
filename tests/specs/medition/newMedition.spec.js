@@ -57,6 +57,7 @@ describe('[medition] Add Glucose Measure - Manual Form', () => {
     const intro = new NewGlucometerPage();
     await intro.isLoaded();
     await intro.tapRegistrarManualmente();
+    await new AddGlucosePage().isLoaded();
   });
 
   it('should display the manual glucose measure form', async () => {
@@ -158,9 +159,7 @@ describe('[medition] New Scale Manual Measure - Weight Form', () => {
     await goToScaleIntro();
     const intro = new NewScalePage();
     await intro.isLoaded();
-    const addManualBtn = $('android=new UiSelector().textContains("manual")');
-    await addManualBtn.waitForDisplayed({ timeout: 10000 });
-    await addManualBtn.click();
+    await intro.tapRegistrarManualmente();
   });
 
   it('should display the manual weight form', async () => {

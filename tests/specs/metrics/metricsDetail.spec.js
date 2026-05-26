@@ -5,13 +5,8 @@ const HeartRateDetailsPage  = require('../../../src/pages/metrics/HeartRateDetai
 const StepsDetailsPage      = require('../../../src/pages/metrics/StepsDetailsPage');
 const MetabolismDetailsPage = require('../../../src/pages/metrics/MetabolismDetailsPage');
 const { loginAs }           = require('../../../src/flows/auth.flow');
+const { navigateToMetric }  = require('../../../src/helpers/metricsNav');
 const { skipIfBefore }      = require('../../../src/helpers/versionGuard');
-
-const navigateToMetric = async (cardTitle) => {
-  const card = $(`android=new UiSelector().text("${cardTitle}")`);
-  await card.waitForDisplayed({ timeout: 15000 });
-  await card.click();
-};
 
 // ─────────────────────────────────────────────
 // Composición corporal (Weight)

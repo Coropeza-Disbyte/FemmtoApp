@@ -1,26 +1,11 @@
-const MeetUserPage     = require('../../../src/pages/auth/MeetUserPage');
-const { skipIfBefore } = require('../../../src/helpers/versionGuard');
-
-/**
- * Navega desde inicio limpio hasta la pantalla MeetUser (Greeting).
- * El flujo de nuevo usuario llega a Greeting después de:
- *   Welcome → "Comenzar" → Greeting
- */
-const navigateToGreeting = async () => {
-  const pkg = process.env.APP_PACKAGE || 'com.femmto.app';
-  await driver.execute('mobile: shell', { command: 'pm', args: ['clear', pkg] });
-  await driver.execute('mobile: shell', { command: 'am', args: ['start', '-n', `${pkg}/.MainActivity`] });
-  // Esperar botón de la Welcome Screen y continuar
-  await $('~Ingresar por primera vez').waitForDisplayed({ timeout: 30000 });
-  await $('~Ingresar por primera vez').click();
-  // Esperar pantalla Greeting
-  await $('android=new UiSelector().text("¡Hola!")').waitForDisplayed({ timeout: 15000 });
-};
+const MeetUserPage              = require('../../../src/pages/auth/MeetUserPage');
+const { goToNewUserGreeting }   = require('../../../src/flows/onboarding.flow');
+const { skipIfBefore }          = require('../../../src/helpers/versionGuard');
 
 // ─────────────────────────────────────────────────────────────────────────────
 describe('[auth] MeetUser — Greeting Screen', function () {
   before(function () { if (skipIfBefore('3.6.0')) this.skip(); });
-  beforeEach(navigateToGreeting);
+  beforeEach(goToNewUserGreeting);
 
   it('should display greeting screen elements', async () => {
     const page = new MeetUserPage();
@@ -41,7 +26,7 @@ describe('[auth] MeetUser — Greeting Screen', function () {
 // ─────────────────────────────────────────────────────────────────────────────
 describe('[auth] MeetUser — Instructions Screen', () => {
   beforeEach(async () => {
-    await navigateToGreeting();
+    await goToNewUserGreeting();
     const page = new MeetUserPage();
     await page.isLoaded();
     await page.tap(page.startButton);
@@ -65,7 +50,7 @@ describe('[auth] MeetUser — Instructions Screen', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe('[auth] MeetUser — Targets Screen', () => {
   beforeEach(async () => {
-    await navigateToGreeting();
+    await goToNewUserGreeting();
     const page = new MeetUserPage();
     await page.isLoaded();
     await page.tap(page.startButton);
@@ -103,7 +88,7 @@ describe('[auth] MeetUser — Targets Screen', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe('[auth] MeetUser — Motivations Screen', () => {
   beforeEach(async () => {
-    await navigateToGreeting();
+    await goToNewUserGreeting();
     const page = new MeetUserPage();
     await page.isLoaded();
     await page.tap(page.startButton);
@@ -138,7 +123,7 @@ describe('[auth] MeetUser — Motivations Screen', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe('[auth] MeetUser — HowKnow Screen', () => {
   beforeEach(async () => {
-    await navigateToGreeting();
+    await goToNewUserGreeting();
     const page = new MeetUserPage();
     await page.isLoaded();
     await page.tap(page.startButton);
@@ -175,7 +160,7 @@ describe('[auth] MeetUser — HowKnow Screen', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe('[auth] MeetUser — Frequency Screen', () => {
   beforeEach(async () => {
-    await navigateToGreeting();
+    await goToNewUserGreeting();
     const page = new MeetUserPage();
     await page.isLoaded();
     await page.tap(page.startButton);

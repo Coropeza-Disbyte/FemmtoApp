@@ -149,8 +149,9 @@ const appPackage  = process.env.APP_PACKAGE               || 'com.femmto.app';
 const appActivity = process.env.APP_ACTIVITY              || 'com.femmto.app.MainActivity';
 
 exports.config = {
-  runner: 'local',
-  port: 4723,
+  runner:   'local',
+  hostname: process.env.APPIUM_HOST || 'localhost',
+  port:     parseInt(process.env.APPIUM_PORT || '4723', 10),
 
   // Vacío — cada capability define sus propios specs para distribución paralela real
   specs: [],
@@ -198,13 +199,13 @@ exports.config = {
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
 
-  services: [
-    ['appium', {
-      // Ruta explícita al Appium local v2.x — evita que Windows resuelva al global v1.22.3
-      command: path.resolve('./node_modules/.bin/appium.cmd'),
-      args: { relaxedSecurity: true },
-    }],
-  ],
+  // Si APPIUM_HOST está seteado el server es remoto — no levantar Appium local
+  services: process.env.APPIUM_HOST
+    ? []
+    : [['appium', {
+        command: path.resolve('./node_modules/.bin/appium.cmd'),
+        args: { relaxedSecurity: true },
+      }]],
 
   framework: 'mocha',
   reporters: ['spec'],

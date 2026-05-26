@@ -44,12 +44,13 @@ const state = {
   ],
 
   results: {
-    modules:     {},   // '[auth]' → { total, pass, fail, skip, tests[] }
+    modules:     {},   // 'folder/spec.spec.js' → { total, pass, fail, skip, tests[], tag, folder }
     failures:    [],
     currentTest: null, // { module, describe, it, startMs }
     startTime:   null,
     endTime:     null,
   },
+  currentSpec: '',     // 'auth/login.spec.js' — updated on each spec file start
 
   log: [],  // últimas 500 entradas { ts, type, msg }
   hookResultsSeen: new Set(), // dedupe: prevent double-counting when afterTest hook + spec reporter both report
@@ -238,8 +239,9 @@ function startRun({ suite, specs, grep }) {
     return { ok: false, error: 'NO_DEVICE' };
   }
 
-  state.running = true;
-  state.grep    = grep || null;
+  state.running     = true;
+  state.grep        = grep || null;
+  state.currentSpec = '';
   state.results = { modules: {}, failures: [], currentTest: null,
                     startTime: Date.now(), endTime: null };
   state.log = [];
@@ -307,6 +309,9 @@ function startRun({ suite, specs, grep }) {
         ? '  —  ' + state.grep.split('|').map(s => s.trim()).filter(Boolean).join(', ')
         : '';
       addLog('TEST', '▶ ' + p.file + grepSuffix);
+      // Extract "auth/login.spec.js" from full path for grouping
+      const specM = p.file.match(/tests\/specs\/(.+)$/i) || p.file.match(/specs\/(.+)$/i);
+      state.currentSpec = specM ? specM[1].replace(/\\/g, '/') : p.file;
       state.results.currentTest = { file: p.file, describe: '', it: '', startMs: Date.now() };
       broadcast('current_test', state.results.currentTest);
     }
@@ -324,8 +329,10 @@ function startRun({ suite, specs, grep }) {
     if (p.type === 'describe') {
       currentModule   = '[' + p.module + ']';
       currentDescribe = p.label;
-      if (!state.results.modules[currentModule]) {
-        state.results.modules[currentModule] = { total: 0, pass: 0, fail: 0, skip: 0, tests: [] };
+      const descKey   = state.currentSpec || currentModule;
+      if (!state.results.modules[descKey]) {
+        const folder = state.currentSpec ? state.currentSpec.split('/')[0] : p.module;
+        state.results.modules[descKey] = { total: 0, pass: 0, fail: 0, skip: 0, tests: [], tag: currentModule, folder };
       }
       state.results.currentTest = { module: currentModule, describe: currentDescribe, it: '…', startMs: Date.now() };
       broadcast('current_test', state.results.currentTest);
@@ -336,8 +343,10 @@ function startRun({ suite, specs, grep }) {
       // Skip if already counted via the real-time afterTest hook (prevents double-counting the spec-reporter batch)
       if (state.hookResultsSeen.has(p.label)) return;
 
-      const mod = state.results.modules[currentModule]
-               || (state.results.modules[currentModule] = { total: 0, pass: 0, fail: 0, skip: 0, tests: [] });
+      const lineKey = state.currentSpec || currentModule;
+      const folder  = state.currentSpec ? state.currentSpec.split('/')[0] : currentModule.replace(/[\[\]]/g, '');
+      const mod = state.results.modules[lineKey]
+               || (state.results.modules[lineKey] = { total: 0, pass: 0, fail: 0, skip: 0, tests: [], tag: currentModule, folder });
 
       mod.total++;
       if (p.type === 'pass') mod.pass++;
@@ -567,13 +576,16 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
-    const status = passed ? 'pass' : 'fail';
-    const ms     = duration || null;
+    const status  = passed ? 'pass' : 'fail';
+    const ms      = duration || null;
+    const hookKey = state.currentSpec || module;
+    const hookFolder = state.currentSpec ? state.currentSpec.split('/')[0]
+                     : (module.match(/\[([^\]]+)\]/) || ['', ''])[1];
 
-    if (!state.results.modules[module]) {
-      state.results.modules[module] = { total: 0, pass: 0, fail: 0, skip: 0, tests: [] };
+    if (!state.results.modules[hookKey]) {
+      state.results.modules[hookKey] = { total: 0, pass: 0, fail: 0, skip: 0, tests: [], tag: module, folder: hookFolder };
     }
-    const mod = state.results.modules[module];
+    const mod = state.results.modules[hookKey];
     mod.total++;
     if (status === 'pass') mod.pass++; else mod.fail++;
 
@@ -810,6 +822,10 @@ tr:hover td{background:rgba(48,54,61,.3)}
 .results-cols{display:flex;gap:12px}
 .results-table{flex:1;min-width:0}
 .failures-col{flex:1;min-width:0}
+#failuresList{max-height:420px;overflow-y:auto;padding-right:2px}
+#failuresList::-webkit-scrollbar{width:4px}
+#failuresList::-webkit-scrollbar-track{background:transparent}
+#failuresList::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:2px}
 .failures-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .fail-card{background:#1e0a0a;border:1px solid #5a1a1a;border-radius:6px;padding:8px 10px;margin-bottom:6px}
 .fail-card-name{font-size:12px;font-weight:700;color:var(--red)}
@@ -1551,26 +1567,39 @@ function renderResults() {
 
   // Module table
   var tbody = document.getElementById('resultsTableBody');
-  var keys = Object.keys(modules);
+  var keys = Object.keys(modules).sort();
   if (!keys.length) {
     tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);font-style:italic">Sin datos</td></tr>';
   } else {
     var totalRow = { total: 0, pass: 0, fail: 0, skip: 0 };
-    var html = keys.map(function(k) {
+    var curFolder = null;
+    var html = '';
+    keys.forEach(function(k) {
       var m = modules[k];
       totalRow.total += m.total; totalRow.pass += m.pass;
       totalRow.fail  += m.fail;  totalRow.skip  += m.skip;
       var pct = m.total > 0 ? Math.round(m.pass / m.total * 100) : null;
       var pctClass = pct === null ? 'na' : pct === 100 ? 'good' : pct >= 80 ? 'warn' : 'bad';
-      return '<tr' + (m.fail > 0 ? ' style="background:rgba(248,81,73,.05)"' : '') + '>' +
-        '<td style="font-weight:700;color:var(--cyan)">' + esc(k) + '</td>' +
+
+      // Folder header row
+      var folder = m.folder || (k.includes('/') ? k.split('/')[0] : '');
+      var label  = k.includes('/') ? k.split('/').slice(1).join('/') : k;
+      if (folder && folder !== curFolder) {
+        curFolder = folder;
+        html += '<tr style="background:rgba(0,180,216,.06)">' +
+          '<td colspan="6" style="color:var(--cyan);font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 8px;opacity:.8">' +
+          esc(folder + '/') + '</td></tr>';
+      }
+
+      html += '<tr' + (m.fail > 0 ? ' style="background:rgba(248,81,73,.05)"' : '') + '>' +
+        '<td style="' + (folder ? 'padding-left:14px' : 'font-weight:700;color:var(--cyan)') + '">' + esc(label) + '</td>' +
         '<td>' + m.total + '</td>' +
         '<td class="stat-pass">' + (m.pass || '—') + '</td>' +
         '<td class="stat-fail">' + (m.fail || '—') + '</td>' +
         '<td class="stat-skip">' + (m.skip || '—') + '</td>' +
         '<td><span class="pct-badge ' + pctClass + '">' + (pct !== null ? pct + '%' : '—') + '</span></td>' +
         '</tr>';
-    }).join('');
+    });
     var tpct = totalRow.total > 0 ? Math.round(totalRow.pass / totalRow.total * 100) : null;
     html += '<tr style="border-top:1px solid var(--border);font-weight:700">' +
       '<td style="color:var(--text)">Total</td>' +

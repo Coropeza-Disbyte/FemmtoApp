@@ -1,13 +1,10 @@
 const LoginPage         = require('../../../src/pages/auth/LoginPage');
 const ResetPasswordPage = require('../../../src/pages/auth/ResetPasswordPage');
+const { launchClean }   = require('../../../src/flows/auth.flow');
 
 describe('[auth] Reset Password', () => {
   beforeEach(async () => {
-    const pkg = process.env.APP_PACKAGE || 'com.femmto.app';
-    await driver.execute('mobile: shell', { command: 'pm',  args: ['clear', pkg] });
-    await driver.execute('mobile: shell', { command: 'am',  args: ['start', '-n', `${pkg}/.MainActivity`] });
-    await $('~Ya tengo una cuenta').waitForDisplayed({ timeout: 30000 });
-    await $('~Ya tengo una cuenta').click();
+    await launchClean();
     const login = new LoginPage();
     await login.isLoaded();
     await login.tap(login.forgotPassword);

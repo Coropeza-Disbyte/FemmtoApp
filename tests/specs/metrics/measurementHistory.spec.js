@@ -6,14 +6,9 @@ const WeightHistoryPage  = require('../../../src/pages/metrics/WeightHistoryPage
 const GlucoseHistoryPage = require('../../../src/pages/metrics/GlucoseHistoryPage');
 const PresureHistoryPage = require('../../../src/pages/metrics/PresureHistoryPage');
 const StepsHistoryPage   = require('../../../src/pages/metrics/StepsHistoryPage');
-const { loginAs }        = require('../../../src/flows/auth.flow');
-const { skipIfBefore }   = require('../../../src/helpers/versionGuard');
-
-const navigateToMetric = async (cardTitle) => {
-  const card = $(`android=new UiSelector().text("${cardTitle}")`);
-  await card.waitForDisplayed({ timeout: 15000 });
-  await card.click();
-};
+const { loginAs }          = require('../../../src/flows/auth.flow');
+const { navigateToMetric } = require('../../../src/helpers/metricsNav');
+const { skipIfBefore }     = require('../../../src/helpers/versionGuard');
 
 // ─────────────────────────────────────────────
 // Historial — Composición corporal
