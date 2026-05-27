@@ -509,7 +509,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (url === '/api/specs' && req.method === 'GET') {
-    return json(res, scanSpecs());
+    try { return json(res, scanSpecs()); }
+    catch (e) { return json(res, [], 500); }
   }
 
   if (url === '/api/run' && req.method === 'POST') {
@@ -1113,6 +1114,7 @@ es.addEventListener('init', function(e) {
   gResults = d.results || gResults;
   renderResults();
   updateRunButtons();
+  loadSpecs();
 });
 
 es.addEventListener('pipeline',     function(e) { renderPipeline(JSON.parse(e.data)); });
@@ -1225,10 +1227,16 @@ function launchAllEmulators() {
 }
 
 function loadSpecs() {
-  fetch('/api/specs').then(function(r) { return r.json(); }).then(function(specs) {
-    gSpecs = specs;
-    renderSpecTree(specs, false);
-  });
+  fetch('/api/specs')
+    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(specs) {
+      gSpecs = specs;
+      renderSpecTree(specs, false);
+    })
+    .catch(function(err) {
+      var tree = document.getElementById('specTree');
+      if (tree) tree.innerHTML = '<div class="device-empty" style="color:#f85149">Error: ' + err.message + '</div>';
+    });
 }
 
 function filterSpecs(query) {

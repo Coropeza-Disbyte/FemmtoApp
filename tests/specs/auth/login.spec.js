@@ -1,4 +1,5 @@
 const LoginPage            = require('../../../src/pages/auth/LoginPage');
+const HomePage             = require('../../../src/pages/home/HomePage');
 const { launchClean }      = require('../../../src/flows/auth.flow');
 const credentials          = require('../../../src/fixtures/auth/credentials');
 
@@ -66,6 +67,11 @@ describe('[auth] Login — credenciales válidas', () => {
     const page = new LoginPage();
     await page.isLoaded();
     await page.login(credentials.validUser.email, credentials.validUser.password);
-    await page.loginButton.waitForDisplayed({ timeout: 20000, reverse: true });
+    // Esperar Home en lugar de esperar que loginButton desaparezca:
+    // waitForDisplayed(reverse:true) falla si la red es lenta (>45s en device físico).
+    // waitForScreen usa LONG_TIMEOUT (30s) pero se llama DESPUÉS del tap — el reloj empieza
+    // cuando la API responde, no desde el inicio del test.
+    const home = new HomePage();
+    await home.widgetTitle.waitForDisplayed({ timeout: 90000 });
   });
 });

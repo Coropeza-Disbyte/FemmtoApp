@@ -3,8 +3,8 @@ version: 4.0.0
 screen: home
 risk_level: high
 since: 3.0.1
-last_modified: 2026-05-20
-build: 1025
+last_modified: 2026-05-26
+build: 1027
 source_files:
   - src/features/Home/containers/Overview/index.js
   - src/features/Home/containers/Overview/sections/ObjectiveTabs/TabsSection.js
@@ -15,6 +15,7 @@ source_files:
   - src/features/Home/containers/Overview/sections/HealthMetrics/index.js
   - src/features/Home/containers/Overview/sections/TrendsSection/index.js
   - src/components/HomeHeader/index.js
+  - src/components/HotFemmtoModal/index.js
   - src/theme/measurementColors.js
 spec_file: tests/specs/home/home.spec.js
 page_object: src/pages/home/HomePage.js
@@ -228,6 +229,7 @@ El componente `HealthMetricCard` centraliza los estilos de todas las cards de m�
 |------------|-----------------|-------------|
 | `OptionalUpdateBottomSheet` | sí | sheet de actualización opcional; se auto-muestra si hay versión más reciente |
 | `FeedbackFlow` | sí | flujo de feedback en app; accede a soporte (`Support`) o menú con highlight de reseña (`MenuOptions?highlightReview=true`) |
+| `HotFemmtoModal` | **no (deshabilitado desde build 1025)** | modal promocional "Hot Femmto"; import, ref, lógica y JSX comentados en `Overview/index.js` tras expiración de promo el 18/05/2026. Componente en disco pero no se monta. |
 
 ---
 
@@ -265,3 +267,4 @@ El componente `HealthMetricCard` centraliza los estilos de todas las cards de m�
 | v4.0.0 | Rebranding completo | Eliminado tab Medición del nav; reemplazado FavoritesSelector por ObjectiveTabs; nuevo header con routing inteligente; TourGuide onboarding; TrendsSection; HealthyHabitSection; grid de métricas; measurementColors |
 | v4.0.0 (build 1024) | Correcciones docs | Path HomeHeader corregido a `src/components/HomeHeader/index.js`; routing de Pasos/General corregido (sí navegan a Measure); orden de botones del header documentado; FeedbackFlow y OptionalUpdateBottomSheet registrados |
 | v4.0.0 (build 1025) | Fix | TourGuide: clave `@femmto/home_tour_v1` escrita en AsyncStorage al **iniciar** el tour (no al completarlo) — evita re-aparición al navegar fuera a mitad del tour |
+| v4.0.0 (build 1027) | Fix + chore | fix(home): clave `@femmto/home_tour_v1` escrita en AsyncStorage al iniciar el tour — evita re-aparición. chore(home): `HotFemmtoModal` deshabilitado (import, ref, lógica y JSX comentados) tras expiración de promo "Hot Femmto" el 18/05/2026. |

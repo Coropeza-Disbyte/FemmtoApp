@@ -407,3 +407,19 @@ npx wdio run wdio.conf.js --spec scripts/capture-ui-dumps.spec.js
 ```
 
 **Nota:** Regenerar cuando el build cambie de versión mayor (ej: 4.0.0 → 4.1.0). Para builds del mismo X.Y.Z no es necesario salvo cambios visuales confirmados.
+
+---
+
+## 14. HomePage.isLoaded() — anchor en contenido, no en bottom nav
+
+**Problema:** En Android 16 físico (Motorola Edge 60 Fusion), `~Home` (bottom nav tab, y≈2179-2311 en pantalla de 2400px) puede no ser visible para `waitForDisplayed` durante la animación post-tour. Esto provoca timeout de 30s en todos los tests de Home.
+
+**Regla:** `isLoaded()` en `HomePage` usa `$text('Resumen de hoy')` (TextView plano en y≈136, parte superior del contenido) como anchor, no el tab del bottom nav.
+
+```js
+// ❌ Frágil en Android 16 — bottom nav animado post-tour
+async isLoaded() { await this.waitForScreen(this.tabHome); }
+
+// ✅ Correcto — TextView estático visible al cargar Home
+async isLoaded() { await this.waitForScreen(this.$text('Resumen de hoy')); }
+```

@@ -11,8 +11,12 @@ class HomePage extends BasePage {
   // HomeHeader — botón "Nueva medición" (reemplaza tab Medición desde v4.0.0)
   get btnNuevaMedicion() { return this.$('Nueva medición'); }
 
+  // "Resumen de hoy" es un TextView plano en y≈136 — más estable que ~Home
+  // (bottom nav en y≈2179 puede no ser visible durante animación post-tour en Android 16)
+  get widgetTitle() { return this.$text('Resumen de hoy'); }
+
   async isLoaded() {
-    await this.waitForScreen(this.tabHome);
+    await this.waitForScreen(this.widgetTitle);
     return true;
   }
 

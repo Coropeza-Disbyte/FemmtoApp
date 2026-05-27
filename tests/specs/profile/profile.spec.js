@@ -5,6 +5,7 @@ const MenuPage           = require('../../../src/pages/profile/MenuPage');
 describe('[profile] Menu Screen', () => {
   beforeEach(async () => {
     await launchAndLogin();
+    await driver.pause(1500); // Android 16 physical: Home sigue animando post-tour
     const menuBtn = $('~Menu');
     await menuBtn.waitForDisplayed({ timeout: 15000 });
     await menuBtn.click();
@@ -41,6 +42,7 @@ describe('[profile] Menu Screen', () => {
 describe('[profile] Profile Screen', () => {
   beforeEach(async () => {
     await launchAndLogin();
+    await driver.pause(1500); // Android 16 physical: Home sigue animando post-tour
     const menuBtn = $('~Menu');
     await menuBtn.waitForDisplayed({ timeout: 15000 });
     await menuBtn.click();
